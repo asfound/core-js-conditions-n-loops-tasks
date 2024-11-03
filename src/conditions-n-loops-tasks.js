@@ -106,8 +106,60 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  let result = '';
+
+  const tens = Math.floor(num / 10);
+  const units = num % 10;
+
+  if (tens) {
+    switch (tens) {
+      case 3:
+        result += 'XXX';
+        break;
+      case 2:
+        result += 'XX';
+        break;
+      case 1:
+        result += 'X';
+        break;
+      default:
+        result += '';
+    }
+  }
+
+  switch (units) {
+    case 9:
+      result += 'IX';
+      break;
+    case 8:
+      result += 'VIII';
+      break;
+    case 7:
+      result += 'VII';
+      break;
+    case 6:
+      result += 'VI';
+      break;
+    case 5:
+      result += 'V';
+      break;
+    case 4:
+      result += 'IV';
+      break;
+    case 3:
+      result += 'III';
+      break;
+    case 2:
+      result += 'II';
+      break;
+    case 1:
+      result += 'I';
+      break;
+    default:
+      result += '';
+  }
+  return result;
 }
 
 /**
@@ -187,8 +239,11 @@ function convertNumberToString(numberStr) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  for (let i = 0; i <= str.length / 2; i += 1) {
+    if (str[i] !== str[str.length - 1 - i]) return false;
+  }
+  return true;
 }
 
 /**
@@ -205,8 +260,15 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  let index = -1;
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      index = i;
+      return index;
+    }
+  }
+  return index;
 }
 
 /**
@@ -224,8 +286,12 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  const str = String(num);
+  for (let i = 0; i < str.length; i += 1) {
+    if (+str[i] === digit) return true;
+  }
+  return false;
 }
 
 /**
