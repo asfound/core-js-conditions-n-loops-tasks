@@ -333,19 +333,64 @@ function getBalanceIndex(arr) {
  *
  * @example:
  *        [
- *          [1, 2, 3],
- *  3  =>   [8, 9, 4],
- *          [7, 6, 5]
+ *          [1, 2, 3], i = 0
+ *  3  =>   [8, 9, 4], i = 1 matrix[i][right]
+ *          [7, 6, 5]  i = 2 (bot = 2)
  *        ]
  *        [
- *          [1,  2,  3,  4],
- *  4  =>   [12, 13, 14, 5],
- *          [11, 16, 15, 6],
- *          [10, 9,  8,  7]
+ *          top [1,  2,  3,  4],
+ *  4  =>       [12, 13, 14, 5],
+ *              [11, 16, 15, 6], right -1?
+ *          bot [10, 9,  8,  7]  m[i][r]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = [];
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = [];
+    for (let j = 0; j < size; j += 1) {
+      matrix[i][j] = 0;
+    }
+  }
+
+  let top = 0;
+  let right = size - 1;
+  let bot = size - 1;
+  let left = 0;
+
+  let current = 1;
+
+  while (top <= bot && left <= right) {
+    for (let i = left; i <= right; i += 1) {
+      matrix[top][i] = current;
+      current += 1;
+    }
+
+    top += 1;
+
+    for (let i = top; i <= bot; i += 1) {
+      matrix[i][right] = current;
+      current += 1;
+    }
+
+    right -= 1;
+
+    for (let i = right; i >= left; i -= 1) {
+      matrix[bot][i] = current;
+      current += 1;
+    }
+
+    bot -= 1;
+
+    for (let i = bot; i >= top; i -= 1) {
+      matrix[i][left] = current;
+      current += 1;
+    }
+
+    left += 1;
+  }
+
+  return matrix;
 }
 
 /**
