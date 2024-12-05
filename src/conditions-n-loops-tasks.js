@@ -427,10 +427,6 @@ function rotateMatrix(/* matrix */) {
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
 function sortByAsc(a) {
-  const arr = a;
-  if (arr.length < 2) return arr;
-  const middle = Math.floor(arr.length / 2);
-
   function slice(array, from, to) {
     const length = to - from;
     const sliced = [];
@@ -439,41 +435,43 @@ function sortByAsc(a) {
     }
     return sliced;
   }
+  if (a.length > 1) {
+    const arr = a;
+    const middle = Math.floor(arr.length / 2);
 
-  const leftHalf = slice(arr, 0, middle);
-  const rightHalf = slice(arr, middle, arr.length);
+    const leftHalf = slice(arr, 0, middle);
+    const rightHalf = slice(arr, middle, arr.length);
 
-  const sortedLeft = sortByAsc(leftHalf);
-  const sortedRight = sortByAsc(rightHalf);
+    sortByAsc(leftHalf);
+    sortByAsc(rightHalf);
 
-  let pointer = 0;
-  let pointerLeft = 0;
-  let pointerRight = 0;
+    let pointer = 0;
+    let pointerLeft = 0;
+    let pointerRight = 0;
 
-  while (pointerLeft < sortedLeft.length && pointerRight < sortedRight.length) {
-    if (sortedLeft[pointerLeft] < sortedRight[pointerRight]) {
-      arr[pointer] = sortedLeft[pointerLeft];
+    while (pointerLeft < leftHalf.length && pointerRight < rightHalf.length) {
+      if (leftHalf[pointerLeft] < rightHalf[pointerRight]) {
+        arr[pointer] = leftHalf[pointerLeft];
+        pointerLeft += 1;
+        pointer += 1;
+      } else {
+        arr[pointer] = rightHalf[pointerRight];
+        pointerRight += 1;
+        pointer += 1;
+      }
+    }
+
+    while (pointerLeft < leftHalf.length) {
+      arr[pointer] = leftHalf[pointerLeft];
       pointerLeft += 1;
       pointer += 1;
-    } else {
-      arr[pointer] = sortedRight[pointerRight];
+    }
+    while (pointerRight < rightHalf.length) {
+      arr[pointer] = rightHalf[pointerRight];
       pointerRight += 1;
       pointer += 1;
     }
   }
-
-  while (pointerLeft < sortedLeft.length) {
-    arr[pointer] = sortedLeft[pointerLeft];
-    pointerLeft += 1;
-    pointer += 1;
-  }
-  while (pointerRight < sortedRight.length) {
-    arr[pointer] = sortedRight[pointerRight];
-    pointerRight += 1;
-    pointer += 1;
-  }
-
-  return arr;
 }
 
 /**
