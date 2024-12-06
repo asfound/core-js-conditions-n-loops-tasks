@@ -519,30 +519,24 @@ function shuffleChar(str, iterations, initialString = str, cycle = 0) {
   const currentCycle = cycle + 1;
   let shuffled = '';
   if (iteration === 0) return str;
-  if (iteration > 0) {
-    let even = '';
-    let odd = '';
-    for (let i = 0; i < str.length; i += 1) {
-      if (i % 2 === 0) {
-        even += str[i];
-      } else {
-        odd += str[i];
-      }
-    }
-    shuffled = even + odd;
 
-    if (shuffled === initialString) {
-      const cycleLength = cycle + 1;
-      const effectiveIterations = iterations % cycleLength;
-      const toShuffle = cycleLength - currentCycle;
-      return shuffleChar(
-        shuffled,
-        effectiveIterations,
-        initialString,
-        toShuffle
-      );
+  let even = '';
+  let odd = '';
+  for (let i = 0; i < str.length; i += 1) {
+    if (i % 2 === 0) {
+      even += str[i];
+    } else {
+      odd += str[i];
     }
   }
+  shuffled = even + odd;
+
+  if (shuffled === initialString) {
+    const cycleLength = currentCycle;
+    const cyclesLeft = (iterations + cycle) % cycleLength;
+    return shuffleChar(shuffled, cyclesLeft, initialString);
+  }
+
   return shuffleChar(shuffled, iteration - 1, initialString, currentCycle);
 }
 
