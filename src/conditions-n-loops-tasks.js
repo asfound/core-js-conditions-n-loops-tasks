@@ -514,8 +514,9 @@ function sortByAsc(a) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(str, iterations) {
+function shuffleChar(str, iterations, initialString = str, cycle = 0) {
   const iteration = iterations;
+  const currentCycle = cycle + 1;
   let shuffled = '';
   if (iteration === 0) return str;
   if (iteration > 0) {
@@ -529,8 +530,20 @@ function shuffleChar(str, iterations) {
       }
     }
     shuffled = even + odd;
+
+    if (shuffled === initialString) {
+      const cycleLength = cycle + 1;
+      const effectiveIterations = iterations % cycleLength;
+      const toShuffle = cycleLength - currentCycle;
+      return shuffleChar(
+        shuffled,
+        effectiveIterations,
+        initialString,
+        toShuffle
+      );
+    }
   }
-  return shuffleChar(shuffled, iteration - 1);
+  return shuffleChar(shuffled, iteration - 1, initialString, currentCycle);
 }
 
 /**
